@@ -14,5 +14,6 @@ namespace tockoteka.Data
 
         }
         public DbSet<BlogCategory> BlogCategory { get; set; }
+        public DbSet<Blog> Blog { get; set; }
     }
 }
