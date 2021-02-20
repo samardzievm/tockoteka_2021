@@ -1,0 +1,23 @@
+﻿@model tockoteka.Models.Blog
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container">
+    <img src="@Model.Cover" alt="" width="100%" height="300px">
+    <h1 class="display-4 text-center" id="title">@Model.Title</h1>
+
+    <div>
+        <strong><i class="fa fa-user" style="width: 20px"></i>  </strong> <span> //AVTOR(later) </span> <br>
+        <strong><i class="fa fa-calendar" style="width: 20px"></i> </strong> <span class="datum"> //DATUM(later) </span>
+    </div>
+    
+    <p style="text-align: justify;" class="mt-2"> @Model.Content </p>
+    <a asp-action="Index" class="btn btn-dark  mb-3"><i class="fa fa-chevron-left"></i></a>
+</div>
+@*admin tools (later) *@
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

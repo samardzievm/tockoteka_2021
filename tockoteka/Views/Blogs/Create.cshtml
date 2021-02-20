@@ -1,0 +1,50 @@
+﻿@model tockoteka.Models.ViewModels.BlogVM
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Форма за создавање на блог </h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Blog.Title" class="control-label"></label>
+                <input asp-for="@Model.Blog.Title" class="form-control" />
+                <span asp-validation-for="@Model.Blog.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Blog.Description" class="control-label"></label>
+                <textarea asp-for="@Model.Blog.Description" class="form-control"> </textarea>
+                <span asp-validation-for="@Model.Blog.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Blog.Content" class="control-label"></label>
+                <textarea asp-for="@Model.Blog.Content" class="form-control"> </textarea>
+                <span asp-validation-for="@Model.Blog.Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Blog.Cover" class="control-label"></label>
+                <input asp-for="@Model.Blog.Cover" class="form-control" />
+                <span asp-validation-for="@Model.Blog.Cover" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Blog.BlogCategory" class="control-label"></label>
+                <select asp-for="@Model.Blog.CategoryId" asp-items="@Model.CategorySelectList" class="form-control">
+                    <option disabled selected>--Одбери категорија--</option>
+                </select>
+                <span asp-validation-for="@Model.Blog.CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Додади" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

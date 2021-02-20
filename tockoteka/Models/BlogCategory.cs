@@ -8,6 +8,7 @@ namespace tockoteka.Models
 {
     public class BlogCategory
     {
+        [Key]
         public int Id { get; set; }
         [Display(Name = "Име на категорија")]
         [Required]

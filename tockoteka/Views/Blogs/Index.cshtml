@@ -1,0 +1,29 @@
+﻿@model IEnumerable<tockoteka.Models.Blog>
+
+@{
+    ViewData["Title"] = "Блогови";
+}
+
+<p>
+    <a asp-action="Create">Додади нов блог</a>
+</p>
+
+<div class="container">
+
+    <h1 class="display-4">Листа на блогови</h1>
+    <div class="row row-cols-1 row-cols-md-1">
+        @foreach(var obj in Model)
+        {
+        <div class="col mb-4">
+            <div class="card">
+                <img src="@obj.Cover" class="card-img-top " alt="@obj.Title" height="200px">
+                <div class="card-body">
+                    <h5 class="card-title"> <a asp-action="Details" asp-route-id="@obj.Id"> @obj.Title </a></h5>
+                    <p class="card-text"> @obj.Description </p>
+                </div>
+            </div>
+        </div>
+        }
+
+    </div>
+</div>
