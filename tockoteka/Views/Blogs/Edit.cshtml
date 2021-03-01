@@ -7,7 +7,7 @@
 <h4>Форма за промена на блог </h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-10">
         <form asp-action="Edit" method="post">
             <input asp-for="Blog.Id" hidden />
             <div class="form-group">
@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <label asp-for="Blog.Content" class="control-label"></label>
-                <textarea asp-for="Blog.Content" class="form-control"> </textarea>
+                <textarea id="summernote" asp-for="Blog.Content" class="form-control"> </textarea>
                 <span asp-validation-for="Blog.Content" class="text-danger"></span>
             </div>
 
@@ -43,13 +43,27 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Зачувај" class="btn btn-primary" />
+                <a asp-route-id="@Model.Blog.Id" asp-action="Details" class="btn btn-outline-secondary">Назад</a>
+                <input type="submit" value="Зачувај" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Назад</a>
+
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Започнете со пишување на содржината',
+                //tabsize: 2,
+                height: 320,
+                focus: true
+            });
+        });
+    </script>
+}
 
