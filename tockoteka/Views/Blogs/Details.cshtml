@@ -13,11 +13,13 @@
         <strong><i class="fa fa-calendar" style="width: 20px"></i> </strong> <span class="datum"> //DATUM(later) </span>
     </div>
     
-    <p style="text-align: justify;" class="mt-2"> @Model.Content </p>
-    <a asp-action="Index" class="btn btn-dark  mb-3"><i class="fa fa-chevron-left"></i></a>
+    <p style="text-align: justify;" class="mt-2"> @Html.Raw(@Model.Content) </p>
+    @*<a asp-action="Index" class="btn btn-dark  mb-3"></a>*@
 </div>
 @*admin tools (later) *@
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-secondary pl-3 pr-3"><i class="fa fa-chevron-left"></i></a>
+    @*admin actions*@
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success pl-3 pr-3"><i class="far fa-edit"></i></a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger pl-3 pr-3"><i class="far fa-trash-alt"></i></a>
 </div>
