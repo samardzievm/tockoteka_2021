@@ -1,8 +1,24 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Почетна";
+    //Layout = "";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@*<head>
+    <link href="~/css/homepage.css" rel="stylesheet"/>
+</head>*@
+
+<div class="jumbotron text-center">
+    <h1 class="display-3">Точкотека</h1>
+    <p class="lead">
+        Место каде може да ги споделувате велосипедските доживувања, совети и трикови,
+        како и да ја огласувате вашата опрема
+    </p>
+    <hr class="my-4">
+    <p>За почеток, Ви препорачуваме да ги погледнете најновите блогови.</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" asp-controller="Blogs" asp-action="Index">Продолжи</a>
+    </p>
 </div>
+
+
+

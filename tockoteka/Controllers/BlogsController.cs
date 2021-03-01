@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,10 @@ namespace tockoteka.Controllers
         // GET: Blogs
         public ActionResult Index()
         {
-            IEnumerable<Blog> objList = _db.Blog.Include(u => u.BlogCategory);
+            IEnumerable<Blog> objList = _db.Blog
+                .FromSqlRaw("SELECT * FROM blog").OrderByDescending(o => o.Id) // sql query
+                .Include(u => u.BlogCategory); // foreign key
+
             return View(objList);
         }
 
