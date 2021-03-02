@@ -1,4 +1,6 @@
-﻿@model tockoteka.Models.ViewModels.BlogVM
+﻿@using System.Globalization
+
+@model tockoteka.Models.ViewModels.BlogVM
 @{
     ViewData["Title"] = "Create";
 }
@@ -41,6 +43,13 @@
                 <span asp-validation-for="@Model.Blog.CategoryId" class="text-danger"></span>
             </div>
 
+            @*date hidden*@
+            <div class="form-group" hidden>
+                <label asp-for="@Model.Blog.Date" class="control-label"></label>
+                <input type="datetime" asp-for="@Model.Blog.Date" class="form-control" value="@DateTime.Today.ToString("dd MMMM yyyy", new CultureInfo("mk-MK"))"  />
+                <span asp-validation-for="@Model.Blog.Date" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <a asp-action="Index" class="btn btn-outline-secondary pl-3 pr-3">Откажи</a>
                 <input type="submit" value="Додади" class="btn btn-success" />
@@ -50,14 +59,19 @@
 </div>
 
 @section Scripts{
-    <script>
-        $(document).ready(function () {
-            $('#summernote').summernote({
-                placeholder: 'Започнете со пишување на содржината',
-                //tabsize: 2,
-                height: 320,
-                focus: true
-            });
+    @{
+<partial name="_ValidationScriptsPartial" />
+
+    }
+
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            placeholder: 'Започнете со пишување на содржината',
+            //tabsize: 2,
+            height: 320,
+            focus: true
         });
-    </script>
+    });
+</script>
 }

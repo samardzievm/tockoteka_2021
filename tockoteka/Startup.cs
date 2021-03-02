@@ -18,6 +18,7 @@ namespace tockoteka
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //System.Globalization.CultureInfo.DefaultThreadCurrentCulture = new System.Globalization.CultureInfo("mk-MK");
         }
 
         public IConfiguration Configuration { get; }
