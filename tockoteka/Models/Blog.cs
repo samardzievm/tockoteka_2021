@@ -20,7 +20,8 @@ namespace tockoteka.Models
         public string Content { get; set; }
         [Display(Name = "Насловна слика")]
         public string Cover { get; set; }
-        // add DateTime column
+        [Display(Name = "Датум")]
+        public string Date { get; set; }
         public int CategoryId { get; set; }
         [Display(Name = "Категорија")]
         [ForeignKey("CategoryId")]
