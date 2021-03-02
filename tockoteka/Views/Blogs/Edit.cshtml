@@ -1,4 +1,5 @@
-﻿@model tockoteka.Models.ViewModels.BlogVM
+﻿@using System.Globalization
+@model tockoteka.Models.ViewModels.BlogVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -40,6 +41,13 @@
                     <option disabled selected>--Одбери категорија--</option>
                 </select>
                 <span asp-validation-for="Blog.CategoryId" class="text-danger"></span>
+            </div>
+
+            @*date hidden*@
+            <div class="form-group" hidden>
+                <label asp-for="@Model.Blog.Date" class="control-label"></label>
+                <input type="datetime" asp-for="@Model.Blog.Date" class="form-control" value="Последна промена на @DateTime.Today.ToString("dd MMMM yyyy", new CultureInfo("mk-MK"))" />
+                <span asp-validation-for="@Model.Blog.Date" class="text-danger"></span>
             </div>
 
             <div class="form-group">

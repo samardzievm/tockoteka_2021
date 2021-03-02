@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using tockoteka.Models;
 
 namespace tockoteka.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -15,5 +16,6 @@ namespace tockoteka.Data
         }
         public DbSet<BlogCategory> BlogCategory { get; set; }
         public DbSet<Blog> Blog { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
     }
 }

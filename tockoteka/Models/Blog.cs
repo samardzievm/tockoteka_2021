@@ -20,7 +20,7 @@ namespace tockoteka.Models
         public string Content { get; set; }
         [Display(Name = "Насловна слика")]
         public string Cover { get; set; }
-        [Display(Name = "Датум")]
+        [Display(Name = "Датум на објава")]
         public string Date { get; set; }
         public int CategoryId { get; set; }
         [Display(Name = "Категорија")]
