@@ -3,11 +3,12 @@
 @{
     ViewData["Title"] = "Блогови";
 }
-
-<p>
-    <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Додади нов блог</a>
-</p>
-
+@if (User.IsInRole(WC.AdminRole) || User.IsInRole(WC.CustomerRole))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-success mt-2"><i class="fas fa-plus"></i> Додади нов блог</a>
+    </p>
+}
 <div class="container">
 
     <h1 class="display-4">Листа на блогови</h1>
