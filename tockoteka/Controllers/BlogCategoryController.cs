@@ -13,6 +13,7 @@ namespace tockoteka.Controllers
     public class BlogCategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
+
         public BlogCategoryController(ApplicationDbContext db)
         {
             _db = db;
