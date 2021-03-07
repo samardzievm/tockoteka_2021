@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using tockoteka.Data;
 using tockoteka.Models;
@@ -48,16 +49,31 @@ namespace tockoteka.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            BlogVM blogVM = new BlogVM()
+            // get the full name of the user approach
+            var claimsIdentity = (ClaimsIdentity)User.Identity; // get the identity of the user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier); // match the user
+
+            BlogUserVM blogUserVM = new BlogUserVM()
             {
                 Blog = new Blog(),
                 CategorySelectList = _db.BlogCategory.Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
-                })
+                }),
+                ApplicationUser = _db.ApplicationUser.FirstOrDefault(u => u.Id == claim.Value)
             };
-            return View(blogVM);
+            return View(blogUserVM);
+            //BlogVM blogVM = new BlogVM()
+            //{
+            //    Blog = new Blog(),
+            //    CategorySelectList = _db.BlogCategory.Select(i => new SelectListItem
+            //    {
+            //        Text = i.Name,
+            //        Value = i.Id.ToString()
+            //    })
+            //};
+            //return View(blogVM);
         }
 
         // POST: Blogs/Create

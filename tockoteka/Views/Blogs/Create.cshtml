@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 
-@model tockoteka.Models.ViewModels.BlogVM
+@model tockoteka.Models.ViewModels.BlogUserVM
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -45,9 +46,12 @@
 
             @*date hidden*@
             <div class="form-group" hidden>
-                <label asp-for="@Model.Blog.Date" class="control-label"></label>
-                <input type="datetime" asp-for="@Model.Blog.Date" class="form-control" value="@DateTime.Today.ToString("dd MMMM yyyy", new CultureInfo("mk-MK"))"  />
-                <span asp-validation-for="@Model.Blog.Date" class="text-danger"></span>
+                <input type="datetime" asp-for="@Model.Blog.Date" class="form-control" value="@DateTime.Today.ToString("dd MMMM yyyy", new CultureInfo("mk-MK"))" />
+            </div>
+
+            @*author hidden*@
+            <div class="form-group" hidden>
+                <input type="text" asp-for="@Model.Blog.Author" class="form-control" value="@Model.ApplicationUser.FullName" />
             </div>
 
             <div class="form-group">
@@ -60,18 +64,18 @@
 
 @section Scripts{
     @{
-<partial name="_ValidationScriptsPartial" />
+        <partial name="_ValidationScriptsPartial" />
 
     }
 
-<script>
-    $(document).ready(function () {
-        $('#summernote').summernote({
-            placeholder: 'Започнете со пишување на содржината',
-            //tabsize: 2,
-            height: 320,
-            focus: true
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Започнете со пишување на содржината',
+                //tabsize: 2,
+                height: 320,
+                focus: true
+            });
         });
-    });
-</script>
+    </script>
 }

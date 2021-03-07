@@ -22,6 +22,8 @@ namespace tockoteka.Models
         public string Cover { get; set; }
         [Display(Name = "Датум на објава")]
         public string Date { get; set; }
+        [Display(Name = "Автор")]
+        public string Author { get; set; }
         public int CategoryId { get; set; }
         [Display(Name = "Категорија")]
         [ForeignKey("CategoryId")]

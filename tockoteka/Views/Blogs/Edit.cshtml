@@ -30,6 +30,12 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="@Model.Blog.Author" class="control-label"></label>
+                <input type="text" asp-for="@Model.Blog.Author" class="form-control" value="@Model.Blog.Author" />
+                <span asp-validation-for="@Model.Blog.Author" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Blog.Cover" class="control-label"></label>
                 <input asp-for="Blog.Cover" class="form-control" />
                 <span asp-validation-for="Blog.Cover" class="text-danger"></span>
@@ -43,7 +49,6 @@
                 <span asp-validation-for="Blog.CategoryId" class="text-danger"></span>
             </div>
 
-            @*date hidden*@
             <div class="form-group" hidden>
                 <label asp-for="@Model.Blog.Date" class="control-label"></label>
                 <input type="datetime" asp-for="@Model.Blog.Date" class="form-control" value="Последна промена на @DateTime.Today.ToString("dd MMMM yyyy", new CultureInfo("mk-MK"))" />
