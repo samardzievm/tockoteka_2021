@@ -9,6 +9,7 @@ namespace tockoteka.Models.ViewModels
     public class BlogVM
     {
         public Blog Blog { get; set; }
+        //public BlogCategory Categories { get; set; }
         public IEnumerable<SelectListItem> CategorySelectList { get; set; }
     }
 }

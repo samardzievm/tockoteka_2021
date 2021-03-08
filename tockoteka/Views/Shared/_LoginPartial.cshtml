@@ -3,6 +3,7 @@
 @inject SignInManager<IdentityUser> signInManager;
 @inject UserManager<IdentityUser> userManager;
 
+
     <ul class="navbar-nav">
         @if (signInManager.IsSignedIn(User))
         {
