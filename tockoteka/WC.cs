@@ -10,5 +10,7 @@ namespace tockoteka
         // admin and customer roles
         public const string AdminRole = "Admin";
         public const string CustomerRole = "Customer";
+        // blog cover images folder
+        public const string BlogImagePath = @"\img\blog\cover\";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -19,9 +21,12 @@ namespace tockoteka.Controllers
     public class BlogsController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public BlogsController(ApplicationDbContext db)
+        private readonly IWebHostEnvironment _webHostEnvironment; // to access the WC.cs class where we store global variables  
+
+        public BlogsController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Blogs
@@ -83,9 +88,34 @@ namespace tockoteka.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Add(blogVM.Blog);
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+
+                if (blogVM.Blog.Id == 0)
+                {
+                    
+
+                    string upload = webRootPath + WC.BlogImagePath; // where we want to store(upload) the images
+                    string fileName = Guid.NewGuid().ToString(); // what is the FileName we want to give that will be uploaded in the folder... Guid is random name
+                    string extension = Path.GetExtension(files[0].FileName); // get the extension from files
+
+                    // upload functionality
+
+                    using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+
+                    blogVM.Blog.Cover = fileName + extension;
+                    
+
+                }
+
+
+
             }
 
+            _db.Blog.Add(blogVM.Blog);
             _db.SaveChanges();
 
             return RedirectToAction(nameof(Index));    
@@ -129,6 +159,40 @@ namespace tockoteka.Controllers
         {
             if (ModelState.IsValid)
             {
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+
+                var objFromDb = _db.Blog.AsNoTracking().FirstOrDefault(u => u.Id == blogVM.Blog.Id); // retrieve data from the database. Because EF can track only 1 file at the time, we don't need to track this file from EF, and we use the method AsNoTracking()
+
+                if (files.Count > 0)
+                {
+                    // upload the new file
+                    string upload = webRootPath + WC.BlogImagePath; // where we want to store(upload) the images
+                    string fileName = Guid.NewGuid().ToString(); // what is the FileName we want to give that will be uploaded in the folder... Guid is random name
+                    string extension = Path.GetExtension(files[0].FileName); // get the extension from files
+
+                    // remove the old file
+                    var oldFile = Path.Combine(upload, objFromDb.Cover); // get the path from the app
+
+                    if (System.IO.File.Exists(oldFile))
+                    {
+                        System.IO.File.Delete(oldFile);
+                    }
+
+                    // add the new file
+                    using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+
+                    blogVM.Blog.Cover = fileName + extension;
+                }
+                else
+                {
+                    // if the image is not edited, then save/keep the same image
+                    blogVM.Blog.Cover = objFromDb.Cover;
+                }
+
                 _db.Blog.Update(blogVM.Blog);
                 _db.SaveChanges();
             }
@@ -149,6 +213,7 @@ namespace tockoteka.Controllers
             {
                 return NotFound();
             }
+
             return View(obj);
         }
 
@@ -162,6 +227,16 @@ namespace tockoteka.Controllers
             if (obj == null)
             {
                 return NotFound();
+            }
+
+            // delete the stored image cover
+
+            string upload = _webHostEnvironment.WebRootPath + WC.BlogImagePath;
+            var oldFile = Path.Combine(upload, obj.Cover);
+
+            if (System.IO.File.Exists(oldFile))
+            {
+                System.IO.File.Delete(oldFile);
             }
 
             _db.Remove(obj);
