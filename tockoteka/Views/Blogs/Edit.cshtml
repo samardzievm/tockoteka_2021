@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-10">
-        <form asp-action="Edit" method="post">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <input asp-for="Blog.Id" hidden />
             <div class="form-group">
                 <label asp-for="Blog.Title" class="control-label"></label>
@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label asp-for="Blog.Cover" class="control-label"></label>
-                <input asp-for="Blog.Cover" class="form-control" />
+                <input type="file" name="files" @*asp-for="Blog.Cover"*@ class="form-control" />
                 <span asp-validation-for="Blog.Cover" class="text-danger"></span>
             </div>
 
