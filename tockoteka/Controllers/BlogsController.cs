@@ -30,13 +30,23 @@ namespace tockoteka.Controllers
         }
 
         // GET: Blogs
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            IEnumerable<Blog> objList = _db.Blog
-                .FromSqlRaw("SELECT * FROM blog").OrderByDescending(o => o.Id) // sql query
-                .Include(u => u.BlogCategory); // foreign key
+            BlogCategoryVM blogCategoryVM = new BlogCategoryVM()
+            {
+                Blogs = _db.Blog
+                    .FromSqlRaw("SELECT * FROM blog").OrderByDescending(o => o.Id) // sql query
+                    .Include(c => c.BlogCategory), // foreign key
+                Categories = _db.BlogCategory
+            };
 
-            return View(objList);
+            return View(blogCategoryVM);
+
+            //IEnumerable<Blog> objList = _db.Blog
+            //    .FromSqlRaw("SELECT * FROM blog").OrderByDescending(o => o.Id) // sql query
+            //    .Include(u => u.BlogCategory); // foreign key
+
+            //return View(objList);
         }
 
         // GET: Blogs/Details/5
@@ -110,9 +120,6 @@ namespace tockoteka.Controllers
                     
 
                 }
-
-
-
             }
 
             _db.Blog.Add(blogVM.Blog);
@@ -120,6 +127,8 @@ namespace tockoteka.Controllers
 
             return RedirectToAction(nameof(Index));    
         }
+
+        
 
         // GET: Blogs/Edit/5
         [Authorize(Roles = WC.AdminRole)]
