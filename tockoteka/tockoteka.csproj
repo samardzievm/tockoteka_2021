@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\img\blog\cover\" />
+    <Folder Include="wwwroot\img\blog\content\" />
   </ItemGroup>
 
 </Project>

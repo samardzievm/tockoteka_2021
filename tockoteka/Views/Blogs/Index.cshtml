@@ -1,4 +1,4 @@
-﻿@model IEnumerable<tockoteka.Models.Blog>
+﻿@model tockoteka.Models.ViewModels.BlogCategoryVM
 
 @{
     ViewData["Title"] = "Блогови";
@@ -13,47 +13,28 @@
 <div class="container">
 
     <div class="text-center">
-        NOT DONE YET...
         <button class="btn btn-dark filter-button" data-filter="all">Сите</button>
-        @foreach (var obj in Model)
+        @foreach (var obj in Model.Categories)
         {
-            <button class="btn btn-outline-secondary filter-button" data-filter="@obj.BlogCategory.Name.Replace(' ','_')">@obj.BlogCategory.Name</button>
+            <button class="btn btn-outline-secondary filter-button" data-filter="@obj.Name.Replace(' ','_')">@obj.Name</button>
         }
     </div>
 
     <br />
 
     <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-12">
-            @if (Model.Count() == 0)
+        <div class="col-lg-8 col-md-8 col-sm-12 ">
+
+            @if (Model.Blogs.Count() == 0)
             {
                 <p>Не постојат блогови</p>
             }
             else
             {
-                @foreach (var obj in Model)
+                @foreach (var obj in Model.Blogs)
                 {
-                    <div class="card mt-3">
-                        <a asp-action="Details" asp-route-id="@obj.Id">
-                            <img src="@WC.BlogImagePath@obj.Cover" class="card-img-top" alt="@obj.Title" height="300px">
-                        </a>
-
-                        <div class="card-body">
-                            <a class="text-decoration-none" asp-action="Details" asp-route-id="@obj.Id">
-                                <h4 class="card-title text-primary">  @obj.Title </h4>
-                            </a>
-                            <p class="card-text"> @obj.Description </p>
-                            <p class="card-text">
-                                <small class="text-muted">@obj.Date</small> @*&#8226;*@ &nbsp;
-
-                                <a href="#" class="text-white">
-                                    <span class="badge badge-dark">
-                                        @obj.BlogCategory.Name
-                                    </span>
-                                </a>
-
-                            </p>
-                        </div>
+                    <div class="filter @obj.BlogCategory.Name.Replace(' ','_')">
+                        <partial name="~/Views/Blogs/Partial/_BlogCard.cshtml" model="obj" />
                     </div>
                 }
             }
@@ -74,7 +55,6 @@
             </div>
         </div>
 
-        @*<partial name="_IndividualBookCard" model="prod" />*@
     </div>
 
     <nav aria-label="Page navigation example" class="mt-3">

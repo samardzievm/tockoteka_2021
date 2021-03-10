@@ -6,7 +6,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h4>Форма за создавање на блог </h4>
+<h4>Форма за нов блог </h4>
 <hr />
 <div class="row">
     <div class="col-md-10">
@@ -26,7 +26,7 @@
 
             <div class="form-group">
                 <label asp-for="@Model.Blog.Content" class="control-label"></label>
-                <textarea asp-for="@Model.Blog.Content" id="summernote" class="form-control"> </textarea>
+                <textarea id="summernote" asp-for="@Model.Blog.Content" class="form-control" > </textarea>
                 <span asp-validation-for="@Model.Blog.Content" class="text-danger"></span>
             </div>
 
@@ -68,14 +68,14 @@
 
     }
 
-    <script>
-        $(document).ready(function () {
-            $('#summernote').summernote({
-                placeholder: 'Започнете со пишување на содржината',
-                //tabsize: 2,
-                height: 320,
-                focus: true
-            });
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            placeholder: 'Започнете со пишување на содржината',
+            //tabsize: 2,
+            height: 320,
+            focus: true
         });
-    </script>
+    });
+</script>
 }

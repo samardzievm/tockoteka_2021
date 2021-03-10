@@ -1,0 +1,24 @@
+﻿@model tockoteka.Models.Blog
+
+        <div class="card mt-3">
+            <a asp-action="Details" asp-route-id="@Model.Id">
+                <img src="@WC.BlogImagePath@Model.Cover" class="card-img-top" alt="@Model.Title" height="300px">
+            </a>
+
+            <div class="card-body">
+                <a class="text-decoration-none" asp-action="Details" asp-route-id="@Model.Id">
+                    <h4 class="card-title text-primary">  @Model.Title </h4>
+                </a>
+                <p class="card-text"> @Model.Description </p>
+                <p class="card-text">
+                    <small class="text-muted">@Model.Date</small> @*&#8226;*@ &nbsp;
+
+                    <a href="#" class="text-white">
+                        <span class="badge badge-dark">
+                            @Model.BlogCategory.Name
+                        </span>
+                    </a>
+
+                </p>
+            </div>
+        </div>
