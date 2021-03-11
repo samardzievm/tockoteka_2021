@@ -1,8 +1,14 @@
-﻿@model tockoteka.Models.ViewModels.BlogCategoryVM
+﻿@*@model tockoteka.Models.ViewModels.BlogCategoryVM*@
+@model cloudscribe.Pagination.Models.PagedResult<Blog>
 
 @{
     ViewData["Title"] = "Блогови";
+
+    // pagination data
+    ViewData["Controller"] = "Blogs";
+    ViewData["Action"] = "Index";
 }
+
 @if (User.IsInRole(WC.AdminRole) || User.IsInRole(WC.CustomerRole))
 {
     <p>
@@ -14,9 +20,9 @@
 
     <div class="text-center">
         <button class="btn btn-dark filter-button" data-filter="all">Сите</button>
-        @foreach (var obj in Model.Categories)
+        @foreach (var obj in Model.Data)
         {
-            <button class="btn btn-outline-secondary filter-button" data-filter="@obj.Name.Replace(' ','_')">@obj.Name</button>
+            <button class="btn btn-outline-secondary filter-button" data-filter="@obj.BlogCategory.Name.Replace(' ','_')">@obj.BlogCategory.Name</button>
         }
     </div>
 
@@ -25,13 +31,13 @@
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-12 ">
 
-            @if (Model.Blogs.Count() == 0)
+            @if (Model.Data.Count == 0)
             {
                 <p>Не постојат блогови</p>
             }
             else
             {
-                @foreach (var obj in Model.Blogs)
+                @foreach (var obj in Model.Data)
                 {
                     <div class="filter @obj.BlogCategory.Name.Replace(' ','_')">
                         <partial name="~/Views/Blogs/Partial/_BlogCard.cshtml" model="obj" />
@@ -57,15 +63,9 @@
 
     </div>
 
-    <nav aria-label="Page navigation example" class="mt-3">
-        <ul class="pagination align-self-center">
-            <li class="page-item"><a class="page-link" href="#">Претходна</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Следна</a></li>
-        </ul>
-    </nav>
+    <div class="mt-3">
+        <partial name="_Pagination" model="Model" view-data="ViewData" />
+    </div>
 
 </div>
 

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using tockoteka.Data;
 using tockoteka.Models;
 using tockoteka.Models.ViewModels;
+using cloudscribe.Pagination.Models;
 
 
 namespace tockoteka.Controllers
@@ -30,24 +31,41 @@ namespace tockoteka.Controllers
         }
 
         // GET: Blogs
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 4) // pageSize = number of records to display on the page; pageNumber= start page
         {
-            BlogCategoryVM blogCategoryVM = new BlogCategoryVM()
+            // delete the records that we don't need *formula*
+            int ExludeRecords = (pageSize * pageNumber) - pageSize;
+
+            var Blogs = _db.Blog
+                .FromSqlRaw("SELECT * FROM blog").OrderByDescending(o => o.Id) // sql query
+                .Include(c => c.BlogCategory) // foreign key
+                .Skip(ExludeRecords) // deleting the records we don't need
+                .Take(pageSize); // delete the remaining records after the displayed ones
+
+            var result = new PagedResult<Blog>
             {
-                Blogs = _db.Blog
-                    .FromSqlRaw("SELECT * FROM blog").OrderByDescending(o => o.Id) // sql query
-                    .Include(c => c.BlogCategory), // foreign key
-                Categories = _db.BlogCategory
+                Data = Blogs.AsNoTracking().ToList(),
+                TotalItems = _db.Blog.Count(),
+                PageNumber = pageNumber,
+                PageSize = pageSize
             };
 
-            return View(blogCategoryVM);
-
-            //IEnumerable<Blog> objList = _db.Blog
-            //    .FromSqlRaw("SELECT * FROM blog").OrderByDescending(o => o.Id) // sql query
-            //    .Include(u => u.BlogCategory); // foreign key
-
-            //return View(objList);
+            return View(result);
         }
+
+        // backup
+        //public IActionResult Index()
+        //{
+        //    BlogCategoryVM blogCategoryVM = new BlogCategoryVM()
+        //    {
+        //        Blogs = _db.Blog
+        //            .FromSqlRaw("SELECT * FROM blog").OrderByDescending(o => o.Id) // sql query
+        //            .Include(c => c.BlogCategory), // foreign key
+        //        Categories = _db.BlogCategory
+        //    };
+
+        //    return View(blogCategoryVM);
+        //}
 
         // GET: Blogs/Details/5
         public ActionResult Details(int? id)
