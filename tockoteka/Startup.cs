@@ -41,6 +41,9 @@ namespace tockoteka
                 .AddEntityFrameworkStores<ApplicationDbContext>(); // this line will make change to our database tables, will add Identity tables
             //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+            // cloudscribe web pagination activation
+            services.AddCloudscribePagination(); 
+
             services.AddControllersWithViews();
         }
 
